@@ -1,0 +1,54 @@
+name: Portfolio Frontend CI
+
+on:
+  pull_request:
+    paths:
+      - "Portfolio/myPortfolioFt/myPortfolioWeb/**"
+      - ".github/workflows/portfolio-frontend.yml"
+  push:
+    branches: [main]
+    paths:
+      - "Portfolio/myPortfolioFt/myPortfolioWeb/**"
+      - ".github/workflows/portfolio-frontend.yml"
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: 24
+  FRONTEND_DIR: Portfolio/myPortfolioFt/myPortfolioWeb
+
+jobs:
+  quality:
+    name: Lint, test and build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          
+      - name: Instalar dependencias
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm install --no-audit --no-fund
+        
+      - name: Lint
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm run lint
+        
+      - name: Tests unitarios
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm test -- --watch=false --coverage
+        
+      - name: Construcción a producción
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm run build -- --configuration production
+        
+      - name: Cargar artefacto
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.FRONTEND_DIR }}/dist/myPortfolioWeb
