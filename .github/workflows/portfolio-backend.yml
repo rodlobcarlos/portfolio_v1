@@ -33,7 +33,6 @@ jobs:
           cache: maven
           
       - name: Lanzar test Maven
-        working-directory: ${{ env.BACKEND_DIR }}
         env:
           SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
           SPRING_DATASOURCE_USERNAME: sa
