@@ -3,19 +3,19 @@ name: Portfolio Backend CI
 on:
   pull_request:
     paths:
-      - "myPortfolioBk/**"
+      - "myPortfolioBk/myPortfolioBk/**"
       - ".github/workflows/portfolio-backend.yml"
   push:
     branches: [main]
     paths:
-      - "myPortfolioBk/**"
+      - "myPortfolioBk/myPortfolioBk/**"
       - ".github/workflows/portfolio-backend.yml"
       
 permissions:
   contents: read
 
 env:
-  BACKEND_DIR: myPortfolioBk
+  BACKEND_DIR: myPortfolioBk/myPortfolioBk
 
 jobs:
   test:
@@ -34,6 +34,7 @@ jobs:
           
       - name: Lanzar test Maven
         env:
+          working-directory: ${{ env.BACKEND_DIR }}
           SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
           SPRING_DATASOURCE_USERNAME: sa
           SPRING_DATASOURCE_PASSWORD:
