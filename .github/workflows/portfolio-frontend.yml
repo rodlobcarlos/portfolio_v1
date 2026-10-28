@@ -3,12 +3,12 @@ name: Portfolio Frontend CI
 on:
   pull_request:
     paths:
-      - "Portfolio/myPortfolioFt/myPortfolioWeb/**"
+      - "Portfolio_v1/myPortfolioFt/myPortfolioWeb/**"
       - ".github/workflows/portfolio-frontend.yml"
   push:
     branches: [main]
     paths:
-      - "Portfolio/myPortfolioFt/myPortfolioWeb/**"
+      - "Portfolio_v1/myPortfolioFt/myPortfolioWeb/**"
       - ".github/workflows/portfolio-frontend.yml"
 
 permissions:
@@ -16,7 +16,7 @@ permissions:
 
 env:
   NODE_VERSION: 24
-  FRONTEND_DIR: Portfolio/myPortfolioFt/myPortfolioWeb
+  FRONTEND_DIR: Portfolio_v1/myPortfolioFt/myPortfolioWeb
 
 jobs:
   quality:
