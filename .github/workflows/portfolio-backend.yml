@@ -1,0 +1,43 @@
+name: Portfolio Backend CI
+
+on:
+  pull_request:
+    paths:
+      - "Portfolio/myPortfolioBk/myPortfolioBk/**"
+      - ".github/workflows/portfolio-backend.yml"
+  push:
+    branches: [main]
+    paths:
+      - "Portfolio/myPortfolioBk/myPortfolioBk/**"
+      - ".github/workflows/portfolio-backend.yml"
+      
+permissions:
+  contents: read
+
+env:
+  BACKEND_DIR: Portfolio/myPortfolioBk/myPortfolioBk
+
+jobs:
+  test:
+    name: Test backend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+      - name: Configurar java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+          
+      - name: Lanzar test Maven
+        working-directory: ${{ env.BACKEND_DIR }}
+        env:
+          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+          SPRING_DATASOURCE_USERNAME: sa
+          SPRING_DATASOURCE_PASSWORD:
+          SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+          SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+        run: bash mvnw --batch-mode --no-transfer-progress clean verify
