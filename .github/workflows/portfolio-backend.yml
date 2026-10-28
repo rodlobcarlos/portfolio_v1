@@ -3,19 +3,19 @@ name: Portfolio Backend CI
 on:
   pull_request:
     paths:
-      - "Portfolio_v1/myPortfolioBk/myPortfolioBk/**"
+      - "myPortfolioBk/**"
       - ".github/workflows/portfolio-backend.yml"
   push:
     branches: [main]
     paths:
-      - "Portfolio_v1/myPortfolioBk/myPortfolioBk/**"
+      - "myPortfolioBk/**"
       - ".github/workflows/portfolio-backend.yml"
       
 permissions:
   contents: read
 
 env:
-  BACKEND_DIR: Portfolio_v1/myPortfolioBk/myPortfolioBk
+  BACKEND_DIR: myPortfolioBk
 
 jobs:
   test:
